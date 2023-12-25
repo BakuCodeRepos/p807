@@ -28,9 +28,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-^j$t=i%@-=6ixe8c-4^n-iry0j&^uo3j58*a@9s83ved@a0-+x'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 AUTH_USER_MODEL = 'user.MyUser'
 
@@ -123,11 +123,14 @@ WSGI_APPLICATION = 'SalesProject.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "postgres807",
-        "USER": "developia",
-        "PASSWORD": "123456",
-        "HOST": "localhost",
-        "PORT": "5432",
+        "NAME": os.environ.get("POSTGRES_DB", "SalesProject_db"),
+        "USER": os.environ.get("POSTGRES_USER", "SalesProject_user"),
+        "PASSWORD": os.environ.get(
+            "POSTGRES_PASSWORD",
+            "3EamKgIvzKRYqVX3TYTaewOS6SiPijllRahyYTmwDagIG0H6jlVrO37oX2Kfndhim",
+        ),
+        "HOST": os.environ.get("POSTGRES_HOST", "localhost"),
+        "PORT": os.environ.get("POSTGRES_PORT", "5432"),
     }
 }
 
@@ -216,8 +219,8 @@ USE_I18N = True
 
 
 # For celery
-CELERY_BROKER_URL = "redis://localhost:6379"
-CELERY_RESULT_BACKEND = "redis://localhost:6379"
+CELERY_BROKER_URL = "redis://:3Cvh8Kb5FnGSfHFx@redis:6379/0"
+CELERY_RESULT_BACKEND = "redis://:3Cvh8Kb5FnGSfHFx@redis:6379/0"
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
@@ -237,4 +240,5 @@ CORS_ALLOWED_ORIGINS = [
     "https://sub.example.com",
     "http://localhost:8080",
     "http://127.0.0.1:9000",
+    "http://164.90.237.202",
 ]
